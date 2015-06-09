@@ -184,53 +184,6 @@ class Trainer:
         histoTrainS.Draw('same')
         histoTrainB.SetLineColor(self.background_train.color)
         histoTrainB.Draw('same')
-        
-        
-    def ROCandMaxSig(self,histoS, histoB):
-        nBins=histoS.GetNbinsX()
-        nBinsB=histoB.GetNbinsX()
-        integralS=histoS.Integral(0,nBins+1)
-        integralB=histoB.Integral(0,nBinsB+1)
-        x=array("d")
-        y=array("d")
-        maxSig=-1
-        x.append(0)
-        y.append(0)
-        for i in range(0,nBins+1):
-            effS=histoS.Integral(i,nBins)/integralS
-            effB=histoB.Integral(i,nBins)/integralB
-            sig=effS*self.nsignal/math.sqrt(effS*self.nsignal+effB*self.nbackground)
-            if sig>maxSig:
-                maxSig=sig
-                #        print effS
-                #        print effB
-            x.append(effS)
-            y.append(effB)
-        x.append(1)
-        y.append(1)
-        g = ROOT.TGraph(len(x), x,y)
-        return g,maxSig
-
-    def LorenzCurve(self,histoS, histoB):
-        nBins=histoS.GetNbinsX()
-        nBinsB=histoB.GetNbinsX()
-        integralS=histoS.Integral(0,nBins+1)
-        integralB=histoB.Integral(0,nBinsB+1)
-        x=array("d")
-        y=array("d")
-        x.append(0)
-        y.append(0)
-        for i in range(0,nBins+1):
-            effS=histoS.Integral(i,nBins)/integralS
-            effB=histoB.Integral(i,nBins)/integralB
-            effAll=(effS*self.nsignal+effB*self.nbackground)/(self.nsignal+self.nbackground)
-            x.append(effAll)
-            y.append(effS)
-        x.append(1)
-        y.append(1)
-        g = ROOT.TGraph(len(x), x,y)
-    
-        return g
 
     def removeWorstUntil(self,length):
         if(len(self.best_variables)<=length):
