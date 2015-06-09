@@ -30,7 +30,7 @@ signal_test=Sample('t#bar{t}H test',ROOT.kBlue,'trees/tthbb_fast_'+cat+'_even.ro
 signal_train=Sample('t#bar{t}H training',ROOT.kGreen,'trees/tthbb_fast_'+cat+'_odd.root','')
 background_test=Sample('t#bar{t} test',ROOT.kRed+1,'trees/ttbar_'+cat+'_even.root','')
 background_train=Sample('t#bar{t} training',ROOT.kRed-1,'trees/ttbar_'+cat+'_odd.root','')
-trainer=Trainer(variables)
+trainer=Trainer(variables,addtional_variables)
 
 trainer.addSamples(signal_train,background_train,signal_test,background_test) #add the sample defined above
 trainer.setTreeName('MVATree') # name of tree in files
@@ -55,6 +55,6 @@ print trainer.factoryoptions
 print "trying pray as negative weight treatment"
 trainer.setBDTOption('NegWeightTreatment=Pray')
 trainer.optimizeOption('NTrees')
-print "try paiting as negative weight treatment"
+print "try pairing as negative weight treatment"
 trainer.setBDTOption('NegWeightTreatment=PairNegWeightsGlobal')
 trainer.optimizeOption('NTrees')

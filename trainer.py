@@ -34,7 +34,7 @@ class Trainer:
         self.equalnumevents=True
         self.selection=''
         self.factoryoptions="!V:Silent:!Color:DrawProgressBar:AnalysisType=Classification:Transformations=I;D;P;G,D"
-        self.bdtoptions= "!H:!V:NTrees=1000:MinNodeSize=2.5%:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.5:nCuts=20:MaxDepth=2:NegWeightTreatment=IgnoreNegWeightsInTraining"     
+        self.bdtoptions= "!H:!V:NTrees=1000:MinNodeSize=2.5%:BoostType=Grad:Shrinkage=0.10:!UseBaggedBoost:BaggedSampleFraction=0.6:nCuts=20:MaxDepth=2:NegWeightTreatment=IgnoreNegWeightsInTraining"     
         self.setVerbose(verbose)
 
     def setVerbose(self,v=True):
@@ -74,6 +74,7 @@ class Trainer:
         self.setBDTOption('Shrinkage=0.05')
         self.setBDTOption('NTrees=150')
         self.setBDTOption('NegWeightTreatment=IgnoreNegWeightsInTraining')
+        self.setBDTOption('UseBaggedBoost')
         self.equalnumevents=True
 
     def useTransformations(self, b=True):
@@ -196,8 +197,10 @@ class Trainer:
             for i in range(len(self.best_variables)):
                 # sublist excluding variables i
                 sublist=self.best_variables[:i]+self.best_variables[i+1:]
+                print 'training BDT without',self.best_variables[i]
                 self.trainBDT(sublist)
                 score=self.evaluateLastTraining()
+                print 'score',score
                 if score>bestscore:
                     bestscore=score
                     bestvars=sublist
@@ -219,8 +222,10 @@ class Trainer:
             bestvar=""
             for var in self.variables_to_try:
                 newlist=self.best_variables+[var]
+                print 'training BDT with',var
                 self.trainBDT(newlist)
                 score=self.evaluateLastTraining()
+                print 'score:',score
                 if score>bestscore:
                     bestscore=score
                     bestvar=var
@@ -248,8 +253,8 @@ class Trainer:
             if score>bestscore:
                 bestscore=score
                 best=n
-        print "####### optiminal value is ",
-        print best
+        print "####### optiminal value is", best
+        print "####### yielding scroe ", bestscore
         self.setBDTOption(option+'='+str(best))
         if best==valuelist[-1] and len(valuelist)>2:
             print "####### optiminal value is highest value, optimizing again"
