@@ -70,9 +70,9 @@ class Trainer:
 
     def setReasonableDefaults(self):
         self.setBDTOption('MaxDepth=2')
-        self.setBDTOption('nCuts=50')
-        self.setBDTOption('Shrinkage=0.05')
-        self.setBDTOption('NTrees=150')
+        self.setBDTOption('nCuts=60')
+        self.setBDTOption('Shrinkage=0.02')
+        self.setBDTOption('NTrees=1000')
         self.setBDTOption('NegWeightTreatment=IgnoreNegWeightsInTraining')
         self.setBDTOption('UseBaggedBoost')
         self.equalnumevents=True
@@ -88,6 +88,9 @@ class Trainer:
         ROOT.gROOT.SetMacroPath( "./tmvascripts" )
         ROOT.gROOT.Macro       ( "./TMVAlogon.C" )    
         ROOT.gROOT.LoadMacro   ( "./TMVAGui.C" )
+
+    def printVars(self):
+        print self.best_variables
 
 
     # trains a without changing the defaults of the trainer
