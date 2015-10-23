@@ -38,7 +38,7 @@ trainer.setReasonableDefaults() # set some configurations to reasonable values
 trainer.setEqualNumEvents(True) # reweight events so that integral in training and testsample is the same
 trainer.useTransformations(False) # faster this way
 trainer.setVerbose(False) # no output during BDT training and testing
-trainer.setWeightExpression('(Weight>0)-(Weight<0)') #ignore CSV weights etc, only pm 1 # Weight should correspond to the weightexpression in your tree
+trainer.setWeightExpression('Weight')
 trainer.setSelection('N_Jets>=6&&N_BTagsM>=4') # selection for category (not necessary if trees are split)
 trainer.removeWorstUntil(10) # removes worst variable until only 10 are left 
 trainer.optimizeOption('NTrees') # optimizies the number of trees by trying more and less trees # you need to reoptimize ntrees depending on the variables and on other parameters
