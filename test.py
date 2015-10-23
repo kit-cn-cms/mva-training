@@ -26,10 +26,10 @@ addtional_variables=["BDTOhio_v2_input_h0",
 #samples have a name, a color, a path, and a selection (not implemented yet for training)
 #only the path is really relevant atm
 cat='6j4t'
-signal_test=Sample('t#bar{t}H test',ROOT.kBlue,'trees/tthbb_fast_'+cat+'_even.root','') 
-signal_train=Sample('t#bar{t}H training',ROOT.kGreen,'trees/tthbb_fast_'+cat+'_odd.root','')
-background_test=Sample('t#bar{t} test',ROOT.kRed+1,'trees/ttbar_'+cat+'_even.root','')
-background_train=Sample('t#bar{t} training',ROOT.kRed-1,'trees/ttbar_'+cat+'_odd.root','')
+signal_test=Sample('t#bar{t}H test',ROOT.kBlue,'/nfs/dust/cms/user/hmildner/mva-training/trees/tthbb_fast_'+cat+'_even.root','') 
+signal_train=Sample('t#bar{t}H training',ROOT.kGreen,'/nfs/dust/cms/user/hmildner/mva-training/trees/tthbb_fast_'+cat+'_odd.root','')
+background_test=Sample('t#bar{t} test',ROOT.kRed+1,'/nfs/dust/cms/user/hmildner/mva-training/trees/ttbar_'+cat+'_even.root','')
+background_train=Sample('t#bar{t} training',ROOT.kRed-1,'/nfs/dust/cms/user/hmildner/mva-training/trees/ttbar_'+cat+'_odd.root','')
 trainer=Trainer(variables,addtional_variables)
 
 trainer.addSamples(signal_train,background_train,signal_test,background_test) #add the sample defined above
@@ -52,9 +52,3 @@ print "these are found to be the 8 best variables and best bdt and factory optio
 print trainer.best_variables
 print trainer.bdtoptions
 print trainer.factoryoptions
-print "trying pray as negative weight treatment"
-trainer.setBDTOption('NegWeightTreatment=Pray')
-trainer.optimizeOption('NTrees')
-print "try pairing as negative weight treatment"
-trainer.setBDTOption('NegWeightTreatment=PairNegWeightsGlobal')
-trainer.optimizeOption('NTrees')
